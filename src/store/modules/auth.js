@@ -33,6 +33,7 @@ const auth = {
                     commit('setemail',mail);
 
                 })
+                .catch(err=> err.message)
 
                 
             

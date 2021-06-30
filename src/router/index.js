@@ -2,7 +2,8 @@ import Router from 'vue-router'
 import Home from '@/components/home';
 import Listing from '@/components/list';
 import Login from '@/components/login';
-import Signup from '@/components/signup'
+import Signup from '@/components/signup';
+import Details from '@/components/details';
 
 const router = new Router({
     mode: 'history',
@@ -26,6 +27,11 @@ const router = new Router({
             name: 'signup',
             path: '/signup',
             component: Signup
+        },
+        {
+            name: 'details',
+            path: '/rent/:id',
+            component: Details
         }
 
 

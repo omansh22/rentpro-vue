@@ -3,10 +3,15 @@
 	<header class="header">
 		<h1 class="logo"><a href="#">RentPro</a></h1>
       <ul class="main-nav">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li v-if="$store.getters.isAuthenticated" @click="logout"><a >logout</a></li>
+          <li><a @click="home">Home</a></li>
+          <li v-if="$store.getters.isAuthenticated" > <a>Hello, <i class="fa fa-user icon" aria-hidden="true"></i>
+ <span class="mail" >{{$store.state.auth.email}}</span></a></li>
+          <li v-if="$store.getters.isAuthenticated" @click="logout"><a >Logout</a></li>
+		 <li v-if="!$store.getters.isAuthenticated"><a @click="redirect" > Login </a></li>
+
+		  
           <li><a href="#">Contact</a></li>
+		  
       </ul>
 	</header> 
     </div>
@@ -14,11 +19,29 @@
 <script>
 export default {
     name: "Navbar",
+	data(){
+		return{
+			mail : ''
+		}
+	},
      methods: {
 		 logout(){
 			 this.$store.dispatch('logout')
 			 .then(()=> this.$router.push({name: 'login'}))
+			 .catch(err=>{
+				 console.log(err.message);
+			 })
+		 },
+		 redirect(){
+			 this.$router.push({name: 'login'})
+		 },
+		 home(){
+			 this.$router.push({name: 'Home'})
 		 }
+	 }
+	 ,created(){
+       this.mail = this.$store.state.auth.email;
+	   console.log(this.mail);
 	 }
 
     
@@ -27,9 +50,7 @@ export default {
 
 
 <style scoped>
- * {
-	box-sizing: border-box;
-} 
+
 body {
 	font-family: 'Montserrat', sans-serif;
 	line-height: 1.6;
@@ -41,8 +62,12 @@ ul {
   padding: 0;
   list-style: none;
 }
-
-
+.icon{
+	padding: 0 3px;
+}
+.mail{
+	text-transform: lowercase;
+}
 h2,
 h3,
 a {

@@ -11,14 +11,14 @@
             v-model="search.city"
             label="City"
           ></v-select>
-          <!--         <v-select :items="items" label="Locality or Landmark"></v-select>  -->
-
-          <v-text-field
+<!--                    <v-select @click="getlocality" :items="area" label="Locality or Landmark"></v-select> 
+ -->        
+           <v-text-field
             label="Locality or Landmark"
             v-model="search.locality"
             :rules="rules"
             hide-details="auto"
-          ></v-text-field>
+          ></v-text-field> 
           <v-radio-group v-model="search.property">
             <v-radio
               v-for="n in properties"
@@ -71,12 +71,16 @@ export default {
   data() {
     return {
       cities: ["Bangalore", "Mumbai", "Delhi", "Pune", "Gurgaon"],
-      properties: ["Villa", "PG", "Flats"],
+            cit: [{city: "Bangalore", area: ['Bellendur','hsr','Kormangla',"Marathahalli"]}, ],
+
+      area:['Bellendur','hsr','Kormangla',"Marathahalli"],
+      properties: ["Villa", "PG", "Flat"],
       room: [1, 2, 3],
       rules: [
         (value) => !!value || "Required.",
         (value) => (value && value.length >= 3) || "Min 3 characters",
       ],
+      thiscityarea: [],
 
       search: {
         locality: "",
@@ -91,7 +95,34 @@ export default {
     searching(){
       this.$router.push({name: 'list', params:{
         search : this.search
-      }})
+      }})},
+
+      getlocality(){
+        console.log("hi");
+        for(let i of this.cit){
+          console.log(i);
+          if(i.city === this.search.city){
+            this.thiscityarea = i.area
+            break;
+          }
+          console.log(this.thiscityarea);
+          
+        }
+      
+    },
+    computed: {
+     /*  changelocality: function(){
+        //console.log(this.search.city);
+        for(let i in this.cit){
+          if(i.city === this.search.city){
+            this.thiscityarea = i.area
+            break;
+          }
+          
+        }
+        console.log(this.thiscityarea);
+        return this.thiscityarea
+      } */
     }
   }
 };
@@ -115,6 +146,7 @@ export default {
 .ali {
   margin-bottom: -5px;
   display: flex;
+  padding-top: 15px;
 }
 .r2 {
   display: flex;
@@ -140,5 +172,10 @@ h5 span {
 }
 .my-2 {
   text-align: center;
+}
+@media only screen and (max-width: 500px){
+  .fil{
+    margin: 2px 10px;
+  }
 }
 </style>

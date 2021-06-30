@@ -6,7 +6,7 @@ import { succeshandler , errorhandler } from './helper'
 const keytok = "token";
 
 const loginSer = (Credential)=>{
-    return axios.post("https://mymeetingsapp.herokuapp.com/api/auth/login",
+    return axios.post("http://localhost:3000/auth/login",
     Credential,
     {
         Headers: {
